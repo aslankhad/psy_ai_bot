@@ -12,6 +12,7 @@ from modules.common.keyboard import get_limit_menu
 from modules.common.gpt import gpt_request
 from modules.common.utils import gender_to_str, therapy_to_str
 
+
 router = Router(name=__name__)
 
 
@@ -33,6 +34,9 @@ async def chat(callback: types.CallbackQuery):
 async def other(message: types.Message):
 	try:
 		user = await get_user(message.from_user.id)
+
+		if not user:
+			return
 
 		if not user.subscribe_expired:
 			if user.available_messages <= 0:
@@ -69,5 +73,5 @@ async def other(message: types.Message):
 			{'role': RoleEnum.USER, 'content': message.text},
 			{'role': RoleEnum.ASSISTANT, 'content': response}
 		])
-	except Exception:
-		pass
+	except Exception as exc:
+		logging.error(exc)

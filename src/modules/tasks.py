@@ -1,7 +1,7 @@
 import random
 import logging
 
-from db.db_api import get_users, get_hints, \
+from db.db_api import get_users, get_hints, get_text, \
 	update_users_daily_limit
 
 from modules.common.loader import bot
@@ -15,7 +15,9 @@ async def send_daily_hint():
 		for user in users:
 			await bot.send_message(
 				chat_id=user.id,
-				text=random.choice(hints).hint
+				text=(await get_text('HINT_TEXT')).format(
+					hint=random.choice(hints).hint
+				)
 			)
 	except Exception as exc:
 		logging.error(exc)
