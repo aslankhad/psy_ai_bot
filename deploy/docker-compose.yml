@@ -14,6 +14,8 @@ services:
       - ../src/db/migrations:/opt/app/db/migrations
     ports:
       - 9002:5000
+    networks:
+      - psy_network
 
   psy_db:
     container_name: psy_db
@@ -27,3 +29,7 @@ services:
 volumes:
   psy_db_data:
     driver: local
+
+networks:
+  psy_network:
+    driver: bridge
