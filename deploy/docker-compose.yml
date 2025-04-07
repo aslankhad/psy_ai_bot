@@ -25,6 +25,8 @@ services:
       - TZ=Europe/Moscow
     volumes:
       - psy_db_data:/var/lib/postgresql/data
+    networks:
+      - psy_network
 
 volumes:
   psy_db_data:
